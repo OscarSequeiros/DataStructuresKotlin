@@ -1,5 +1,7 @@
 package linkedlist
 
+import stack.StackImpl
+
 class LinkedList<T> : Iterable<T>, Collection<T>, MutableIterable<T>, MutableCollection<T> {
 
     private var head: Node<T>? = null
@@ -169,7 +171,7 @@ class LinkedList<T> : Iterable<T>, Collection<T>, MutableIterable<T>, MutableCol
 
         if (node.next == tail) {
             tail = node
-    }
+        }
 
         if (node.next != null) {
             size--
@@ -212,7 +214,7 @@ fun <T> Node<T>.printInReverse() {
 fun <T> LinkedList<T>.getMiddle(): Node<T>? {
     var slow = nodeAt(0)
     var fast = nodeAt(0)
-    while(fast != null) {
+    while (fast != null) {
         fast = fast.next
         if (fast != null) {
             fast = fast.next
@@ -239,7 +241,7 @@ fun <T> LinkedList<T>.reversed(): LinkedList<T> {
     return result
 }
 
-fun <T: Comparable<T>> LinkedList<T>.mergeSorted(otherList: LinkedList<T>): LinkedList<T> {
+fun <T : Comparable<T>> LinkedList<T>.mergeSorted(otherList: LinkedList<T>): LinkedList<T> {
     if (this.isEmpty()) return otherList
     if (otherList.isEmpty()) return this
 
@@ -269,4 +271,16 @@ fun <T: Comparable<T>> LinkedList<T>.mergeSorted(otherList: LinkedList<T>): Link
 private fun <T : Comparable<T>> append(result: LinkedList<T>, node: Node<T>): Node<T>? {
     result.append(node.value)
     return node.next
+}
+
+fun <T> LinkedList<T>.printInReverseWithStacks() {
+    val stack = StackImpl<T>()
+    for (node in this) {
+        stack.push(node)
+    }
+    var node = stack.pop()
+    while (node != null) {
+        println(node)
+        node = stack.pop()
+    }
 }
